@@ -8,6 +8,8 @@ class Stats():
     def __init__(self, name: str, total_xp: int) -> None:
         self.name = name
         self.total_xp = total_xp
+        # Revisar
+        # level = Stats.get_level(self.total_xp)
 
     def get_level(self, total_xp: int) -> int:
         level = 1
