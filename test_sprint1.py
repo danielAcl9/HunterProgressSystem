@@ -9,3 +9,9 @@
 
 from entities.stats import Stats
 # from entities.hunter import Hunter
+
+stat = Stats("Fuerza", 250)
+# print(f'Nivel actual: {stat.get_level(50)}')
+# print(f'Nivel {stat.get_level()}, XP Faltante: {stat.xp_for_next_level()}')
+
+print(stat.add_exp(100))

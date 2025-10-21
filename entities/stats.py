@@ -10,7 +10,7 @@ class Stats():
         self.total_xp = total_xp
 
     def get_level(self) -> int:
-        level = 1
+        level: int = 1
         # Recorre el largo del threshold
         for i in range(len(XP_THRESHOLDS)):
             if self.total_xp >= XP_THRESHOLDS[i]:
@@ -20,9 +20,9 @@ class Stats():
                 break
         return level
             
-    def xp_for_next_level(self) -> str:
+    def xp_for_next_level(self) -> int:
         next_lvl = self.get_level()
-        if next_lvl > len(XP_THRESHOLDS):
+        if next_lvl >= len(XP_THRESHOLDS):
             return 0
         else:
             xp_next_lvl = XP_THRESHOLDS[next_lvl]
@@ -30,16 +30,21 @@ class Stats():
             return xp_needed            
 
     def add_exp(self, exp: int) -> str:
-        current_lvl = self.get_level()
-        self.total_xp += exp
-        new_level = self.get_level()
-        if new_level == current_lvl:
-            return f'Experiencia ganada: {exp} - Experiencia total: {self.total_xp} - XP Necesaria para subir: {self.xp_for_next_level()}'
-        else: 
-            return f'Experiencia ganada: {exp} - Nuevo nivel! {current_lvl} -> {new_level}'
 
-stat = Stats("Fuerza", 250)
-# print(f'Nivel actual: {stat.get_level(50)}')
-# print(f'Nivel {stat.get_level()}, XP Faltante: {stat.xp_for_next_level()}')
+        if exp <= 0:
+            return 'No se puede añadir XP negativa o cero'
+        
+        else:
+            current_lvl = self.get_level()
+            self.total_xp += exp
+            new_level = self.get_level()
 
-print(stat.add_exp(100))
+            if new_level == current_lvl:
+                return f'Experiencia ganada: {exp} - Experiencia total: {self.total_xp} - XP Necesaria para subir: {self.xp_for_next_level()}'
+            
+            else: 
+                return f'Experiencia ganada: {exp} - Nuevo nivel! {current_lvl} -> {new_level}'
+
+
+# TODO -
+# Typing limpio en todo
