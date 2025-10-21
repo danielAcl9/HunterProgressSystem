@@ -27,17 +27,19 @@ class Stats():
         else:
             xp_next_lvl = XP_THRESHOLDS[next_lvl]
             xp_needed = xp_next_lvl - self.total_xp
-            return f'XP necesaria para el siguiente nivel: {xp_needed} XP'
+            return xp_needed            
 
-# TODO: Resolver de acá para abajo
-            
-
-    # def add_exp(self, exp: int) -> str:
-    #     self.total_xp += exp
-        
-    #     return f'Se añadió {exp} puntos de experiencia. Experiencia actual de la clase {self.name}: {self.total_xp} XP'
-
+    def add_exp(self, exp: int) -> str:
+        current_lvl = self.get_level()
+        self.total_xp += exp
+        new_level = self.get_level()
+        if new_level == current_lvl:
+            return f'Experiencia ganada: {exp} - Experiencia total: {self.total_xp} - XP Necesaria para subir: {self.xp_for_next_level()}'
+        else: 
+            return f'Experiencia ganada: {exp} - Nuevo nivel! {current_lvl} -> {new_level}'
 
 stat = Stats("Fuerza", 250)
 # print(f'Nivel actual: {stat.get_level(50)}')
-print(stat.xp_for_next_level())
+# print(f'Nivel {stat.get_level()}, XP Faltante: {stat.xp_for_next_level()}')
+
+print(stat.add_exp(100))
