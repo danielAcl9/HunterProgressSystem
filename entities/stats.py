@@ -1,3 +1,7 @@
+# TODO -
+# Typing limpio en todo
+# Añadir comentarios
+
 XP_THRESHOLDS :list[int] = [
     0,      # Nivel 1
     100, 250, 450, 700, 1000,   # Hasta nivel 5
@@ -52,7 +56,3 @@ class Stats():
             
             else: 
                 return f'Experiencia ganada: {exp} - Nuevo nivel! {current_lvl} -> {new_level}'
-
-
-# TODO -
-# Typing limpio en todo
