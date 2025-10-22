@@ -1,5 +1,5 @@
 """
-Stat module for Hunter System.
+Stat module
 
 Defines individual statistics with XP-based leveling.
 """
@@ -26,7 +26,7 @@ class Stat():
         """Initialize a stat with name and total XP accumulated.
         
         Args:
-            name: Name of the stat (e.g., 'Fuerza', 'Agilidad')
+            name: Name of the stat (e.g., 'Strenght', 'Agility')
             total_xp: Total experience points accumulated
         """
         self.name = name
