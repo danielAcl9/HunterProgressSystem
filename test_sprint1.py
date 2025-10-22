@@ -9,7 +9,7 @@
 
 from entities.stats import Stat
 from entities.hunter import Hunter
-
+from entities.quest_dificulty import QuestDifficulty
 
 # print("=== Test 1: Creación Básica ===")
 # stat = Stats("Fuerza", 0)
@@ -40,4 +40,3 @@ print(hunter.get_global_exp())
 print(hunter.get_global_level())
 
 print(hunter.add_gold(15))
-
