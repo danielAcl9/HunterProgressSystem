@@ -7,7 +7,7 @@
 # 7. Recalcular nivel global del Hunter
 # 8. Imprimir nivel global actualizado
 
-from entities.stats import Stats
+from entities.stats import Stat
 from entities.hunter import Hunter
 
 

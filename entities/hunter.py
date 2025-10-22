@@ -1,4 +1,12 @@
-from entities.stats import Stats
+# TODO - Clean Code Review
+# [ ] Add comprehensive docstrings to all methods
+# [ ] Verify type hints are correct and complete
+# [ ] Check PEP 8 compliance (spacing, naming)
+# [ ] Improve variable naming if needed
+# [ ] Remove redundant comments
+# [ ] Add module-level docstring
+
+from entities.stats import Stat
 
 XP_THRESHOLDS :list[int] = [
     0,      # Nivel 1
@@ -22,7 +30,7 @@ class Hunter:
         stat_names = ["Fuerza", "Agilidad", "Inteligencia", "Espíritu", "Dominio"]
         self.stats = {}
         for stat_name in stat_names:
-            self.stats[stat_name] = Stats(stat_name,  0)
+            self.stats[stat_name] = Stat(stat_name,  0)
     
     def get_global_level(self) -> int:
         total_xp = self.get_global_exp()
@@ -50,6 +58,6 @@ class Hunter:
 
         return f'Oro ganado: {new_gold}\nOro Total: {self.gold}'
     
-    def get_stat(self, name: str) -> Stats | None: 
+    def get_stat(self, name: str) -> Stat | None: 
     # Obtener una stat específica por nombre
         return self.stats.get(name)
