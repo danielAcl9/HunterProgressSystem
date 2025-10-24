@@ -23,6 +23,3 @@ class HunterRepository:
         ])
         # Convertir un objeto Hunter en un diccionario para guardar en JSON
         pass
-
-
-    # TODO
