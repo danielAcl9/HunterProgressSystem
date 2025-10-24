@@ -3,11 +3,10 @@
 Defines individual quests / missions with rewards and difficulty levels.
 """
 
-
 import uuid
 from entities.quest_dificulty import QuestDifficulty
 
-class Quest:
+class Quest():
     """Represents a mission/quest that can be completed for rewards
 
 
