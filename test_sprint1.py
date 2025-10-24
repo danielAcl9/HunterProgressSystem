@@ -10,6 +10,7 @@
 from entities.stats import Stat
 from entities.hunter import Hunter
 from entities.quest_dificulty import QuestDifficulty
+from entities.quest import Quest
 
 # print("=== Test 1: Creación Básica ===")
 # stat = Stats("Fuerza", 0)
@@ -30,13 +31,28 @@ from entities.quest_dificulty import QuestDifficulty
 # print(f'Nivel: {stat3.get_level()}, XP Faltante: {stat3.xp_for_next_level()}')
 
 
-hunter = Hunter("Daniel")
+# hunter = Hunter("Daniel")
 
-print(hunter.get_global_exp())
-print(hunter.get_global_level())
+# print(hunter.get_global_exp())
+# print(hunter.get_global_level())
 
-hunter.stats["Fuerza"].add_exp(1000)
-print(hunter.get_global_exp())
-print(hunter.get_global_level())
+# hunter.stats["Fuerza"].add_exp(1000)
+# print(hunter.get_global_exp())
+# print(hunter.get_global_level())
 
-print(hunter.add_gold(15))
+# print(hunter.add_gold(15))
+
+# quest = Quest(
+#     "Leg Training",
+#     "Fuerza",
+#     QuestDifficulty.HARD,  # ← Pasas el enum directamente
+#     500,
+#     150,
+#     "Complete leg workout"
+# )
+
+# print(quest.difficulty)  # QuestDifficulty.HARD
+# print(quest.difficulty.value)  # "Hard"
+
+# if quest.difficulty == QuestDifficulty.EPIC:
+#     print("Epic quest!")
