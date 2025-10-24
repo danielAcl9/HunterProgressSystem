@@ -24,7 +24,7 @@ XP_THRESHOLDS :list[int] = [
     56350, 58750, 61200, 63700, 65000     # Hasta nivel 50
 ]
 
-class Hunter():
+class Hunter:
     """Represents an individual player called Hunter"""
     def __init__(self, name: str, gold: int = 0) -> None:
         """ Initialize a player with name and gold in zero. 

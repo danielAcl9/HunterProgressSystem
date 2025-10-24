@@ -19,7 +19,7 @@ XP_THRESHOLDS: list[int] = [
     56350, 58750, 61200, 63700, 65000     # Up to level 50
 ]
 
-class Stat():
+class Stat:
     """Represents an individual player statistic (Strength, Agility, etc.)."""
 
     def __init__(self, name: str, total_xp: int) -> None:
