@@ -1,5 +1,6 @@
 from entities.hunter import Hunter
 import os
+import json
 
 # TO-DO
 # Asegurar que existe la carpeta data/.
@@ -58,4 +59,24 @@ class HunterRepository:
         for stat_name, stat_data in data["stats"].items():
             hunter.stats[stat_name].total_xp = stat_data["total_xp"]
         
+        return hunter
+    
+    def save(self, hunter: Hunter) -> None:
+        data = self._hunter_to_dict(hunter)
+
+        with open(self.filepath, 'w') as file:
+            json.dump(data, file, indent = 2)
+
+    def load(self) -> Hunter:
+        # Si NO existe, crear un Hunter por defecto
+        if not os.path.exists(self.filepath):
+            default_hunter = Hunter("Player")
+            self.save(default_hunter)
+            return default_hunter
+        
+        with open(self.filepath, 'r') as file:
+            data = json.load(file)
+
+        hunter = self._dict_to_hunter(data)
+
         return hunter

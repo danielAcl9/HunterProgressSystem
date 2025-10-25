@@ -1,24 +1,26 @@
 from repositories.hunter_repository import HunterRepository
 from entities.hunter import Hunter
 
-# Crear hunter original
+# 1. Crear y guardar hunter
+print("=== PASO 1: Crear y Guardar ===")
 hunter1 = Hunter("Daniel")
-hunter1.stats["Fuerza"].add_exp(500)
+hunter1.stats["Strength"].add_exp(500)
 hunter1.add_gold(150)
 
-print(f"Original - Fuerza XP: {hunter1.stats['Fuerza'].total_xp}")
-print(f"Original - Gold: {hunter1.gold}")
+repo = HunterRepository("data/hunter_profile.json")
+repo.save(hunter1)
+print("✓ Hunter guardado")
 
-# Convertir a dict
-repo = HunterRepository("data/hunter.json")
-data = repo._hunter_to_dict(hunter1)
+# 2. Cargar hunter
+print("\n=== PASO 2: Cargar ===")
+hunter2 = repo.load()
+print(f"Nombre: {hunter2.name}")
+print(f"Oro: {hunter2.gold}")
+print(f"Fuerza XP: {hunter2.stats['Strength'].total_xp}")
+print(f"Fuerza Nivel: {hunter2.stats['Strength'].get_level()}")
 
-# Convertir de vuelta a hunter
-hunter2 = repo._dict_to_hunter(data)
-
-print(f"Reconstruido - Fuerza XP: {hunter2.stats['Fuerza'].total_xp}")
-print(f"Reconstruido - Gold: {hunter2.gold}")
-
-# Deben ser iguales
-assert hunter2.stats["Fuerza"].total_xp == 500
+# 3. Verificar persistencia
+assert hunter2.name == "Daniel"
 assert hunter2.gold == 150
+assert hunter2.stats["Strength"].total_xp == 500
+print("\n✓ Todos los datos persisten correctamente")

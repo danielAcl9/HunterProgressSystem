@@ -37,7 +37,7 @@ class Hunter:
         self.name = name
         self.gold = gold
 
-        stat_names: list[str] = ["Fuerza", "Agilidad", "Inteligencia", "Espíritu", "Dominio"]
+        stat_names: list[str] = ["Strength", "Agility", "Intelligence", "Spirit", "Domain"]
         self.stats = {}
         for stat_name in stat_names:
             self.stats[stat_name] = Stat(stat_name,  0)
