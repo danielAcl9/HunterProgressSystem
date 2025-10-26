@@ -63,7 +63,6 @@ class HunterRepository:
     
     def save(self, hunter: Hunter) -> None:
         data = self._hunter_to_dict(hunter)
-
         with open(self.filepath, 'w') as file:
             json.dump(data, file, indent = 2)
 
