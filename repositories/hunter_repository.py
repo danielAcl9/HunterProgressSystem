@@ -10,7 +10,7 @@ import json
 
 class HunterRepository:
 
-    def __init__(self, filepath: str) -> None:
+    def __init__(self, filepath: str = "data/hunter_profile.json") -> None:
         # Recibe la ruta del archivo JSON donde guardará datos
         self.filepath = filepath
         self._ensure_data_directory()
