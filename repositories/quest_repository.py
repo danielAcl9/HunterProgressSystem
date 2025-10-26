@@ -65,9 +65,7 @@ class QuestRepository:
     def add(self, quest: Quest) -> None:
         data = self._load_all_data()
         quest_dict = self._quest_to_dict(quest)
-
         data[quest.id] = quest_dict
-
         self._save_all_data(data)
 
     def get_by_id(self, quest_id: str) -> Quest | None:
@@ -76,25 +74,29 @@ class QuestRepository:
             return None
         
         quest_dict = data[quest_id]
-
         quest = self._dict_to_quest(quest_dict)
 
         return quest
         
     def get_all(self) -> list[Quest]:
-        quest_dict = self._load_all_data()
-
-        quest_list = [self._dict_to_quest(data) for data in quest_dict.values()]
-
-        count = 0
-        for q in quest_list:
-            count += 1
-            print(f"{count}. [{q.stat}] {q.name} ({q.difficulty.name})")
-
+        """Get all quests as a list of Quest objects."""
+        
+        data = self._load_all_data()
+        quest_list = [self._dict_to_quest(quest_data) for quest_data in data.values()]
         return quest_list
 
-    # def update(self, quest: Quest) -> None:
-    #     pass
+    def update(self, quest: Quest) -> bool:
+        """Update an existing quest. Returns True if found and updated."""
+
+        data = self._load_all_data()
+        
+        if quest.id not in data:
+            return False  # Quest no existe
+        
+        quest_dict = self._quest_to_dict(quest)
+        data[quest.id] = quest_dict
+        self._save_all_data(data)
+        return True
 
     def delete(self, quest_id: str) -> bool:
         data = self._load_all_data()
@@ -107,5 +109,9 @@ class QuestRepository:
 
         return True
     
-    # def get_by_stat(self, stat_name: str) -> list[Quest] | None:
-    #     pass
+    def get_by_stat(self, stat_name: str) -> list[Quest]:
+        """Get all quests for a specific stat."""
+
+        all_quests = self.get_all()
+        filtered = [q for q in all_quests if q.stat == stat_name]
+        return filtered

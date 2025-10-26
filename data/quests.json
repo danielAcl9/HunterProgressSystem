@@ -1,0 +1,38 @@
+{
+  "57d0dbec-388c-4aea-992f-4af5eab1d5e9": {
+    "id": "57d0dbec-388c-4aea-992f-4af5eab1d5e9",
+    "name": "Leg Day",
+    "stat": "Strength",
+    "difficulty": "Hard",
+    "xp_reward": 500,
+    "gold_reward": 150,
+    "description": "Train"
+  },
+  "604a0383-4cbc-4cdb-900b-04e0aecba863": {
+    "id": "604a0383-4cbc-4cdb-900b-04e0aecba863",
+    "name": "Study",
+    "stat": "Intelligence",
+    "difficulty": "Normal",
+    "xp_reward": 250,
+    "gold_reward": 50,
+    "description": "Read"
+  },
+  "4e348b03-a59c-41bc-9e0a-1af87148c6a1": {
+    "id": "4e348b03-a59c-41bc-9e0a-1af87148c6a1",
+    "name": "Coding",
+    "stat": "Domain",
+    "difficulty": "Daily",
+    "xp_reward": 50,
+    "gold_reward": 15,
+    "description": "Code for 10 min a day"
+  },
+  "3897ee79-e906-4648-974f-ca3bbebb87e9": {
+    "id": "3897ee79-e906-4648-974f-ca3bbebb87e9",
+    "name": "Exposici\u00f3n del Erudito",
+    "stat": "Intelligence",
+    "difficulty": "Hard",
+    "xp_reward": 500,
+    "gold_reward": 150,
+    "description": "Code something big"
+  }
+}
