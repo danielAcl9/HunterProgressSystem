@@ -6,7 +6,6 @@ Defines individual statistics with XP-based leveling.
 
 from utils.level_constants import XP_THRESHOLDS
 
-
 class Stat:
     """Represents an individual player statistic (Strength, Agility, etc.)."""
 

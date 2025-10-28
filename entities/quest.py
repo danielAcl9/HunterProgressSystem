@@ -9,7 +9,6 @@ from entities.quest_difficulty import QuestDifficulty
 class Quest:
     """Represents a mission/quest that can be completed for rewards
 
-
     Each quest is associated with a specific stat, has a difficulty level, 
     and provides XP and gold rewards when completed. 
     """

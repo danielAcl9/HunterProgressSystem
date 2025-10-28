@@ -1,6 +1,3 @@
-# TODO - Clean Code Review
-# [ ] Improve variable naming if needed
-
 """
 Hunter module
 
@@ -9,6 +6,7 @@ Defines charactheristics for the hunters, players or users.
 
 from entities.stats import Stat
 from utils.level_constants import XP_THRESHOLDS
+from utils.valid_stats import VALID_STATS
 
 class Hunter:
     """Represents an individual player called Hunter"""
@@ -22,10 +20,9 @@ class Hunter:
 
         self.name = name
         self.gold = gold
-
-        stat_names: list[str] = ["Strength", "Agility", "Intelligence", "Spirit", "Domain"]
+        
         self.stats = {}
-        for stat_name in stat_names:
+        for stat_name in VALID_STATS:
             self.stats[stat_name] = Stat(stat_name,  0)
     
     def get_global_level(self) -> int:
