@@ -38,3 +38,14 @@ class QuestService:
         self.quest_repository.add(new_quest)
 
         return (True, "Quest created successfully")
+    
+    
+    def list_by_stat(self, stat_name: str) -> list[Quest]:
+        if stat_name not in VALID_STATS:
+            return []
+        
+        listed_quests = self.quest_repository.get_by_stat(stat_name)
+        return listed_quests
+    
+    def delete_quest(self, quest_id: str) -> bool:
+        return self.quest_repository.delete(quest_id)
