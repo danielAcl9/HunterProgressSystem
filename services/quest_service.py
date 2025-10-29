@@ -41,6 +41,13 @@ class QuestService:
     
     
     def list_by_stat(self, stat_name: str) -> list[Quest]:
+        """List quests filtered by a specific stat name.
+        Args:
+            stat_name (str): The stat name to filter quests by.
+        Returns:
+            list[Quest]: A list of Quest objects that match the stat name.
+        """
+
         if stat_name not in VALID_STATS:
             return []
         
@@ -48,4 +55,11 @@ class QuestService:
         return listed_quests
     
     def delete_quest(self, quest_id: str) -> bool:
+        """Delete a quest by its ID.
+        Args:
+            quest_id (str): The ID of the quest to delete.
+        Returns:
+            bool: True if the quest was found and deleted, False otherwise.
+        """
+        
         return self.quest_repository.delete(quest_id)
