@@ -9,7 +9,11 @@ class QuestLogRepository:
     """Handles loading and saving QuestLog data to JSON file."""
     
     def __init__(self, filepath: str = "data/quest_logs.json"):
-        """Initialize repository with file path."""
+        """Initialize repository with file path.
+        Args:
+            filepath (str): Path to the JSON file.
+        """
+
         self.filepath = filepath
         self._ensure_data_directory()
     
@@ -20,7 +24,11 @@ class QuestLogRepository:
             os.makedirs(dir_path)
     
     def add(self, quest_log: QuestLog) -> None:
-        """Add a quest log entry."""
+        """Add a quest log entry.
+        Args:
+            quest_log (QuestLog): The quest log entry to add.
+        """
+
         logs = self._load_all()
         
         log_dict = {
@@ -34,9 +42,15 @@ class QuestLogRepository:
         self._save_all(logs)
     
     def get_recent(self, n: int = 10) -> list[dict]:
-        """Get the N most recent quest logs."""
+        """Get the N most recent quest logs.
+        Args:
+            n (int): Number of recent logs to retrieve.
+        Returns:
+            list[dict]: List of recent quest log entries.
+        """
+
         logs = self._load_all()
-        return logs[-n:]  # Últimos N elementos
+        return logs[-n:]
     
     def _load_all(self) -> list:
         """Load all quest logs from JSON."""
@@ -47,6 +61,10 @@ class QuestLogRepository:
             return json.load(file)
     
     def _save_all(self, logs: list) -> None:
-        """Save all quest logs to JSON."""
+        """Save all quest logs to JSON.
+        Args:
+            logs (list): List of quest log entries to save.
+        """
+        
         with open(self.filepath, 'w') as file:
             json.dump(logs, file, indent=2)
