@@ -1,3 +1,4 @@
+import stat
 from entities.quest_difficulty import QuestDifficulty
 from repositories import hunter_repository, quest_repository
 
@@ -21,3 +22,13 @@ class ProgressionService:
         """Initialize ProgressionService with required repositories."""
         self.hunter_repo = hunter_repository
         self.quest_repo = quest_repository  
+
+    def _calculate_level_change(self, stat, xp_to_add: int) -> tuple[int, int]:
+        """Calculate level before and after adding XP.
+        Returns:
+            Tuple of (level_before, level_after)
+        """
+        level_before = stat.get_level()
+        stat.add_exp(xp_to_add)
+        level_after = stat.get_level()
+        return (level_before, level_after)
