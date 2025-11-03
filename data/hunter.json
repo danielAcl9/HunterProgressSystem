@@ -1,0 +1,26 @@
+{
+  "name": "Player",
+  "gold": 450,
+  "stats": {
+    "Strength": {
+      "name": "Strength",
+      "total_xp": 500
+    },
+    "Agility": {
+      "name": "Agility",
+      "total_xp": 0
+    },
+    "Intelligence": {
+      "name": "Intelligence",
+      "total_xp": 1000
+    },
+    "Spirit": {
+      "name": "Spirit",
+      "total_xp": 0
+    },
+    "Domain": {
+      "name": "Domain",
+      "total_xp": 0
+    }
+  }
+}

@@ -34,5 +34,32 @@
     "xp_reward": 500,
     "gold_reward": 150,
     "description": "Code something big"
+  },
+  "92ab9fdc-6e9b-4a40-a196-1cac4b5b7894": {
+    "id": "92ab9fdc-6e9b-4a40-a196-1cac4b5b7894",
+    "name": "Leg Day",
+    "stat": "Strength",
+    "difficulty": "Hard",
+    "xp_reward": 500,
+    "gold_reward": 150,
+    "description": "Train"
+  },
+  "9b6d893a-a030-4151-bf6b-6c6f15e90abf": {
+    "id": "9b6d893a-a030-4151-bf6b-6c6f15e90abf",
+    "name": "Programar",
+    "stat": "Intelligence",
+    "difficulty": "Hard",
+    "xp_reward": 500,
+    "gold_reward": 150,
+    "description": "Code 10 minutes"
+  },
+  "a8f5d519-a0a3-4970-b265-7dda160913b9": {
+    "id": "a8f5d519-a0a3-4970-b265-7dda160913b9",
+    "name": "Programar",
+    "stat": "Intelligence",
+    "difficulty": "Hard",
+    "xp_reward": 500,
+    "gold_reward": 150,
+    "description": "Code 10 minutes"
   }
 }
