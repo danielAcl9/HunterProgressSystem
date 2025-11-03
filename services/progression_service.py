@@ -35,6 +35,15 @@ class ProgressionService:
     
     # El método más importante de todo
     def complete_quest(self, quest_id: str) -> dict:
+        """Complete a quest and apply rewards to hunter.
+        
+        Args:
+            quest_id: ID of the completed Quest
+            
+        Returns
+            Dictionary with completion results
+        """
+        
         hunter = self.hunter_repo.load()
         quest = self.quest_repo.get_by_id(quest_id)
 
