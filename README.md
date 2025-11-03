@@ -23,16 +23,20 @@ The system draws inspiration from RPG mechanics and the *Solo Leveling* universe
 
 ## Project Structure
 
+```
 HunterProgressSystem/
 │
 ├── data/ # Persistent data and configuration files
 ├── entities/ # Core entities and domain models (Player, Mission, Stats, etc.)
 ├── repositories/ # Data management and persistence layer
+├── services / # Entities to perform leveling information
 ├── utils/ # Constants, helpers, and utility modules
-│ └── hunter_constants.py
+│ └── level_constants.py
+│ └── valid_stats.py
 │
 ├── test_*.py # Temporary sprint test scripts
 └── README.md
+```
 
 
 ---
