@@ -6,6 +6,8 @@ from services.progression_service import ProgressionService
 
 class CLI:
     def __init__(self) -> None:
+        """Initialize the CLI with repositories and services."""
+
         self.hunter_repo = HunterRepository("data/hunter.json")
         self.quest_repo = QuestRepository("data/quests.json")
         self.quest_service = QuestService(self.quest_repo)
@@ -13,7 +15,8 @@ class CLI:
         self.hunter = self.hunter_repo.load()
 
     def run(self):
-        # Loop principal
+        """Run the main loop of the CLI."""
+        # Main Loop
         while True:
             choice = self.show_main_menu()
 
@@ -31,8 +34,10 @@ class CLI:
 
             self.pause()
 
-    # Menús
+    # Menus
     def show_main_menu(self):
+        """Display the main menu and return the user's choice."""
+
         self.clear_screen()
         print("=== Main Menu - Hunter System ===")
         print("1. View Hunter Profile")
@@ -55,7 +60,10 @@ class CLI:
     # Helpers
 
     def clear_screen(self):
+        """Clear the console screen."""
+        
         os.system('cls' if os.name == 'nt' else 'clear')
 
     def pause(self):
+        """Pause the execution and wait for user input."""
         input("\nPress enter to continue...")
