@@ -30,11 +30,12 @@ HunterProgressSystem/
 ├── entities/ # Core entities and domain models (Player, Mission, Stats, etc.)
 ├── repositories/ # Data management and persistence layer
 ├── services / # Entities to perform leveling information
+├── ui / # User interface (Current: Only console deployment)
 ├── utils/ # Constants, helpers, and utility modules
 │ └── level_constants.py
 │ └── valid_stats.py
 │
-├── test_*.py # Temporary sprint test scripts
+├── main.py
 └── README.md
 ```
 
