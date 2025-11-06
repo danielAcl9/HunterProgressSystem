@@ -1,10 +1,10 @@
 {
   "name": "Player",
-  "gold": 450,
+  "gold": 0,
   "stats": {
     "Strength": {
       "name": "Strength",
-      "total_xp": 500
+      "total_xp": 0
     },
     "Agility": {
       "name": "Agility",
@@ -12,7 +12,7 @@
     },
     "Intelligence": {
       "name": "Intelligence",
-      "total_xp": 1000
+      "total_xp": 0
     },
     "Spirit": {
       "name": "Spirit",
