@@ -49,7 +49,35 @@ class CLI:
         return choice
 
     def show_profile(self):
-        print("TODO: Show profile")
+        """Display hunter profile."""
+        self.clear_screen()
+        
+        # Header
+        print("=" * 50)
+        print("         HUNTER PROFILE".center(50))
+        print("=" * 50)
+        
+        # Hunter info
+        print(f"\nName: {self.hunter.name}")
+        print(f"Global Level: {self.hunter.get_global_level()}")
+        print(f"Total XP: {self.hunter.get_global_exp():,}")
+        print(f"Gold: {self.hunter.gold:,}")
+        
+        # Stats header
+        print("\n" + "=" * 50)
+        print("         STATISTICS".center(50))
+        print("=" * 50)
+        print()
+        
+        # Stats list
+        for stat_name, stat in self.hunter.stats.items():
+            current_xp = stat.total_xp
+            next_level_xp = stat.xp_for_next_level()
+            total_needed = current_xp + next_level_xp
+            
+            print(f"{stat_name:12} : Level {stat.get_level()}  ({current_xp}/{total_needed} XP)")
+        
+        print("\n" + "=" * 50)
         
     def manage_quests(self):
         print("TODO: Manage quests")
