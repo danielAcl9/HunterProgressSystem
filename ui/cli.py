@@ -80,8 +80,71 @@ class CLI:
         print("\n" + "=" * 50)
         
     def manage_quests(self):
-        print("TODO: Manage quests")
+        while True:
+            self.clear_screen()
+            print("=" * 50)
+            print("      QUEST MANAGEMENT".center(50))
+            print("=" * 50)
+            print()
+            print("1. Create Quest")
+            print("2. List All Quests")
+            print("3. Filter by Stat")
+            print("4. Edit Quest")
+            print("5. Delete Quest")
+            print("6. Back to Main Menu")
+            print("=" * 50)
+
+            choice = input("\nSelect Option:")
+
+            if choice == '1':
+                self.create_quest_flow()
+            elif choice == '2':
+                self.list_all_quests()
+            elif choice == '3':
+                self.filter_quests_by_stat()
+            elif choice == '4':
+                self.edit_quest_flow()
+            elif choice == '5':
+                self.delete_quest_flow()
+            elif choice == '6':
+                break
+            else:
+                print("Invalid option.")
         
+            self.pause()
+
+    def create_quest_flow(self):
+        pass
+
+    def list_all_quests(self):
+        self.clear_screen()
+        print("=" * 50)
+        print("         ALL QUESTS".center(50))
+        print("=" * 50)
+        print()
+
+        quests = self.quest_service.get_all()
+
+        if not quests:
+            print("No quests available. Add a new quest first")
+            return
+        
+        for i, quest in enumerate(quests, 1):
+            print(f"{i}. [{quest.stat}] {quest.name} ({quest.difficuly.name})")
+            print(f"   {quest.xp_reward} XP, {quest.gold_reward} Gold")
+            print(f"   \"{quest.description}\"")
+            print()
+
+            
+    def filter_quests_by_stat(self):
+        pass
+
+    def edit_quest_flow(self):
+        pass
+
+    def delete_quest_flow(self):
+        pass
+
     def complete_quests(self):
         self.clear_screen()
         print("=" * 50)
@@ -143,9 +206,6 @@ class CLI:
         print("=" * 50)
 
         self.hunter = self.hunter_repo.load()
-
-
-
 
     # Helpers
 
