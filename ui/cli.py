@@ -80,6 +80,7 @@ class CLI:
         print("\n" + "=" * 50)
         
     def manage_quests(self):
+        """Quest management submenu"""
         while True:
             self.clear_screen()
             print("=" * 50)
@@ -117,6 +118,7 @@ class CLI:
         pass
 
     def list_all_quests(self):
+        """Display all quests"""
         self.clear_screen()
         print("=" * 50)
         print("         ALL QUESTS".center(50))
@@ -135,7 +137,7 @@ class CLI:
             print(f"   \"{quest.description}\"")
             print()
 
-            
+
     def filter_quests_by_stat(self):
         pass
 
@@ -146,6 +148,7 @@ class CLI:
         pass
 
     def complete_quests(self):
+        """Complete quest flow"""
         self.clear_screen()
         print("=" * 50)
         print("         COMPLETE QUEST".center(50))
