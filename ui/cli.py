@@ -83,7 +83,69 @@ class CLI:
         print("TODO: Manage quests")
         
     def complete_quests(self):
-        print("TODO: Complete quests")
+        self.clear_screen()
+        print("=" * 50)
+        print("         COMPLETE QUEST".center(50))
+        print("=" * 50)
+        print()
+
+        # Obtain all quests
+        quests = self.quest_service.get_all()
+
+        # Validate that there are quests
+        if not quests:
+            print("No quests available. Add a new quest first")
+            return
+        
+        # Show numbered list
+        print("Available Quests")
+        for i in enumerate(quests, 1):
+            print(f"{i}. [{quests.stat}] {quest.name} ({quest.difficuly.name}) - {quest.xp_reward} XP, {quest.gold_reward} Gold")
+
+        print()
+
+        # Ask for input
+        try:
+            choice = int(input("Select quest number (0 to cancel):"))
+        except ValueError:
+            print("Invalid input. Please enter a number")
+            return
+        
+        if choice == 0:
+            print("Cancelled")
+            return
+        
+        if choice < 1 or choice > len(quests):
+            print("Invalid quest number.")
+            return
+        
+        # Get selected quest & mark completed
+        selected_quest = quests[choice - 1]
+        result = self.progression_service.complete_quest(selected_quest.id)
+
+        # Validate result
+        if not result["success"]:
+            print(f"Error: {result.get('error', 'Unknown error')}")
+            return
+        
+        # Show feedback
+        print()
+        print("=" * 50)
+        print(f"✓ Quest Completed: {result['quest_name']}")
+        print(f"  +{result['xp_gained']} XP {result['stat']}")
+        print(f"  +{result['gold_gained']} Gold")
+
+        # If there was a level up
+        if result['leveled_up']:
+            print()
+            print(f"🎉 LEVEL UP! {result['stat']} {result['level_before']} → {result['level_after']}")
+
+        print("=" * 50)
+
+        self.hunter = self.hunter_repo.load()
+
+
+
 
     # Helpers
 
