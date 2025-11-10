@@ -115,7 +115,17 @@ class CLI:
             self.pause()
 
     def create_quest_flow(self):
-        pass
+        self.clear_screen()
+        print("=" * 50)
+        print("         CREATE QUEST".center(50))
+        print("=" * 50)
+        print()
+
+        name = input("Quest name: ").strip()
+        if not name:
+            print("Name cannot be empty")
+            return
+        
 
     def list_all_quests(self):
         """Display all quests"""
