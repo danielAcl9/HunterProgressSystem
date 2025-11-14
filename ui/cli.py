@@ -115,6 +115,7 @@ class CLI:
             self.pause()
 
     def create_quest_flow(self):
+        """Create a new quest with user input."""
         self.clear_screen()
         print("=" * 50)
         print("         CREATE QUEST".center(50))
@@ -195,6 +196,7 @@ class CLI:
 
 
     def filter_quests_by_stat(self):
+        """Display quests filtered by stat"""
         self.clear_screen()
         print("=" * 50)
         print("      FILTER QUESTS BY STAT".center(50))
@@ -235,6 +237,7 @@ class CLI:
         pass
 
     def delete_quest_flow(self):
+        """Delete a quest with confirmation."""
         self.clear_screen()
         print("=" * 50)
         print("         DELETE QUEST".center(50))
