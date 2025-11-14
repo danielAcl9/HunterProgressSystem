@@ -126,6 +126,52 @@ class CLI:
             print("Name cannot be empty")
             return
         
+        print("\nAvailable Stats:")
+        from utils.valid_stats import VALID_STATS
+        for i, stat in enumerate(VALID_STATS, 1):
+            print(f"{i}. {stat}")
+
+        try: 
+            stat_choice = int(input("\nSelecty stat (number): "))
+            if stat_choice < 1 or stat_choice > len(VALID_STATS):
+                print("Invalid stat selection.")
+                return
+            stat_type = VALID_STATS[stat_choice - 1]
+        except ValueError:
+            print("Invalid input.")
+            return
+        
+        print("\nDifficulties:")
+        from entities.quest_difficulty import QuestDifficulty
+        difficulties = list(QuestDifficulty)
+        for i, diff in enumerate(difficulties, 1):
+            print(f"{i}. {diff.name}")
+
+        try:
+            diff_choice = int(input("\nSelect diffciulty (number): "))
+            if diff_choice < 1 or diff_choice > len(difficulties):
+                print("Invalid difficulty selection.")
+                return
+            difficulty = difficulties[diff_choice - 1]
+        except ValueError:
+            print("Invalid input")
+            return
+        
+        xp_reward, gold_reward = self.progression_service.get_difficulty_rewards(difficulty)
+
+        description = input("\nDescription: ").strip()
+
+        success, message = self.quest_service.create_quest(
+            name, stat_type, difficulty, xp_reward, gold_reward, description
+        )
+
+        print()
+        if success:
+            print(f"✓ {message}")
+        else:
+            print(f"✗ {message}")
+
+        
 
     def list_all_quests(self):
         """Display all quests"""
