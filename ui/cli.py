@@ -201,7 +201,51 @@ class CLI:
         pass
 
     def delete_quest_flow(self):
-        pass
+        self.clear_screen()
+        print("=" * 50)
+        print("         DELETE QUEST".center(50))
+        print("=" * 50)
+        print()
+
+        quests = self.quest_service.get_all()
+
+        if not quests:
+            print("No quests to delete")
+            return
+        
+        for i, quest in enumerate(quests, 1):
+            print(f"{i}. [{quest.stat}] {quest.name} ({quest.difficulty.name})")
+
+        print()
+        try:
+            choice = int(input("Select quest to delete (0 to cancel): "))
+        except ValueError:
+            print("Invalid input")
+            return
+        
+        if choice == 0:
+            print("Cancelled")
+            return
+        
+        if choice < 1 or choice > len(quests):
+            print("Invalid quest selection.")
+            return
+        
+        selected_quest = quests[choice - 1]
+
+        print(f"\nAre you sure you want to delete '{selected_quest.name}'?")
+        confirm = input("Type 'yes' to confirm: ").strip().lower()
+
+        if confirm == 'yes':
+            success = self.quest_service.delete_quest(selected_quest.id)
+            if success:
+                print(f"✓ Quest '{selected_quest.name}' deleted.")
+            else:
+                print("✗ Failed to delete quest.")
+
+        else:
+            print("Cancelled")
+
 
     def complete_quests(self):
         """Complete quest flow"""
