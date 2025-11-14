@@ -195,7 +195,41 @@ class CLI:
 
 
     def filter_quests_by_stat(self):
-        pass
+        self.clear_screen()
+        print("=" * 50)
+        print("      FILTER QUESTS BY STAT".center(50))
+        print("=" * 50)
+        print()
+
+        from utils.valid_stats import VALID_STATS
+        print("Avaliable Stats:")
+        for i, stat in enumerate(VALID_STATS, 1):
+            print(f"{i}. {stat}")
+
+        try:
+            choice = int(input("\nSelect stat (number):"))
+            if choice < 1 or choice > len(VALID_STATS):
+                print("Invalid selection.")
+                return
+            stat_name = VALID_STATS[choice - 1]
+        except ValueError:
+            print("Invalid selection.")
+            return
+        
+        quests = self.quest_service.list_by_stat(stat_name)
+
+        print()
+        print(f"=== {stat_name} Quests ===")
+        print()
+
+        if not quests:
+            print(f"No quests found for {stat_name}.")
+            return
+        
+        for i, quest in enumerate(quests, 1):
+            print(f"{i}. {quest.name} ({quest.difficulty.name})")
+            print(f"   {quest.xp_reward} XP, {quest.gold_reward} Gold")
+            print()
 
     def edit_quest_flow(self):
         pass
