@@ -29,7 +29,7 @@ HunterProgressSystem/
 ├── data/ # Persistent data and configuration files
 ├── entities/ # Core entities and domain models (Player, Mission, Stats, etc.)
 ├── repositories/ # Data management and persistence layer
-├── services / # Entities to perform leveling information
+├── services / # Business logic
 ├── ui / # User interface (Current: Only console deployment)
 ├── utils/ # Constants, helpers, and utility modules
 │ └── level_constants.py
