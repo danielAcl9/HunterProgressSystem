@@ -172,8 +172,6 @@ class CLI:
         else:
             print(f"✗ {message}")
 
-        
-
     def list_all_quests(self):
         """Display all quests"""
         self.clear_screen()
@@ -232,9 +230,6 @@ class CLI:
             print(f"{i}. {quest.name} ({quest.difficulty.name})")
             print(f"   {quest.xp_reward} XP, {quest.gold_reward} Gold")
             print()
-
-    def edit_quest_flow(self):
-        pass
 
     def delete_quest_flow(self):
         """Delete a quest with confirmation."""
