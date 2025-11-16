@@ -1,3 +1,5 @@
+"""Hunter endpoints"""
+
 from fastapi import APIRouter, HTTPException
 from repositories.hunter_repository import HunterRepository
 
@@ -8,6 +10,7 @@ hunter_repo = HunterRepository("data/hunter.json")
 
 @router.get("/profile")
 def get_gunter_profile():
+    """Get hunter profile with all stats."""
     hunter = hunter_repo.load()
 
     # Convert stats into a serializable format
@@ -30,6 +33,7 @@ def get_gunter_profile():
 
 @router.put("/profile")
 def update_hutner_profile(name: str = None, gold: int = None):
+    """Update hunter name or gold (for testing/admin)"""
     hunter = hunter_repo.load()
 
     # Update fields if included
