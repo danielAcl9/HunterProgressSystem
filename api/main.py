@@ -1,7 +1,7 @@
 """FastPAI application for Hunter System."""
 
 from fastapi import FastAPI
-from api.routes import hunter
+from api.routes import hunter, quests
 
 app = FastAPI(
     title="Hunter Progression System",
@@ -10,6 +10,7 @@ app = FastAPI(
 )
 
 app.include_router(hunter.router)
+app.include_router(quests.router)
 
 @app.get("/")
 def root():
