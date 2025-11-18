@@ -4,6 +4,7 @@ from fastapi import APIRouter, HTTPException, Query
 from typing import Optional
 from repositories.quest_repository import QuestRepository
 from services.quest_service import QuestService
+from entities.quest_difficulty import QuestDifficulty
 
 router = APIRouter(prefix="/quests", tags=["Quests"])
 
@@ -71,4 +72,59 @@ def get_quest(quest_id: str):
         "xp_reward": quest.xp_reward,
         "gold_reward": quest.gold_reward,
         "description": quest.description
+    }
+
+@router.post("/", status_code=201)
+def create_quest(
+    name: str,
+    stat: str,
+    difficuly: str,
+    xp_reward: int,
+    gold_reward: int,
+    description: str = ""):
+    """
+    Create a new quest.
+    
+    - name: Quest name
+    - stat: Stat type (Strength, Agility, Intelligence, Spirit, Domain)
+    - difficulty: Difficulty level (DAILY, EASY, NORMAL, HARD, EPIC, LEGENDARY)
+    - xp_reward: XP reward amount
+    - gold_reward: Gold reward amount
+    - description: Optional quest description
+    """
+
+    try:
+        difficuly_enum = QuestDifficulty[difficuly.upper()]
+    except KeyError:
+        raise HTTPException(
+            status_code=400,
+            detail = f"Invalid difficulty. Must be one of: {[d.name for d in QuestDifficulty]}"
+        )
+    
+    success, message = quest_service.create_quest(
+        name = name,
+        stat_type = stat,
+        difficulty = difficuly_enum,
+        xp_reward = xp_reward,
+        gold_reward = gold_reward,
+        description = description
+    )
+
+    if not success:
+        raise HTTPException(status_code = 400, detail = message)
+    
+    quests = quest_service.get_all()
+    created_quest = quests[-1]
+
+    return {
+        "message": message, 
+        "quest": {
+            "id": created_quest.id,
+            "name": created_quest.name,
+            "stat": created_quest.stat,
+            "difficulty": created_quest.difficulty.name,
+            "xp_reward": created_quest.xp_reward,
+            "gold_reward": created_quest.gold_reward,
+            "description": created_quest.description
+        }
     }
