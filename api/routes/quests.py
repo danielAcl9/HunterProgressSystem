@@ -5,11 +5,16 @@ from typing import Optional
 from repositories.quest_repository import QuestRepository
 from services.quest_service import QuestService
 from entities.quest_difficulty import QuestDifficulty
+from services.progression_service import ProgressionService
+from repositories.hunter_repository import HunterRepository
 
 router = APIRouter(prefix="/quests", tags=["Quests"])
 
 quest_repo = QuestRepository("data/quests.json")
 quest_service = QuestService(quest_repo)
+
+hunter_repo = HunterRepository("data/hunter.json")
+progression_service = ProgressionService(hunter_repo, quest_repo)
 
 @router.get("/")
 def list_quest(stat: Optional[str] = Query(None, description="Fitler by stat type")):
@@ -219,3 +224,37 @@ def delete_quest(quest_id: str):
     
     return None
 
+@router.post("/{quest_id}/complete")
+def complete_quest(quest_id: str):
+    """
+    Complete a quest and apply rewards to Huner.
+    
+    Parameters:
+        - quest_id: UUID of the quest to complete
+    """
+
+    result = progression_service.complete_quest(quest_id)
+
+    if not result["success"]:
+        error = result.get("error", "Unknown error")
+        if "not found" in error.lower():
+            raise HTTPException(status_code = 404, detail = error)
+        else:
+            raise HTTPException(status_code = 400, detail = error)
+        
+    return{
+        "message": f"Quest '{result['quest_name']}' completed!",
+        "rewards": {
+            "xp_gained": result["xp_gained"],
+            "stat": result["stat"],
+            "gold_gained": result["gold_gained"]
+        },
+        "progression": {
+            "level_before": result["level_before"],
+            "level_after": result["level_after"],
+            "leveled_up": result["leveled_up"]
+        },
+        "hunter_status": {
+            "total_gold": result["total_gold"]
+        }
+    }
