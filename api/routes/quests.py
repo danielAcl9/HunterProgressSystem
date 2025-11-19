@@ -21,7 +21,13 @@ def list_quest(stat: Optional[str] = Query(None, description="Fitler by stat typ
     """
     List all quests, optionally filtered by stat.
     
-    - **stat**: Optional filter by stat name (Strength, Agility, Intelligence, Spirit, Domain)
+    Parameters
+        - stat: Optional filter by stat name (Strength, Agility, Intelligence, Spirit, Domain)
+    
+    Returns:
+        - total: Total number of quests returned
+        - stat_filter: The stat filter applied (if any)
+        - quests: List of quest objects
     """
 
     if stat: 
@@ -59,7 +65,11 @@ def get_quest(quest_id: str):
     """
     Get a specific quest by ID.
     
-    - **quest_id**: UUID of the quest
+    Parameters:
+        - quest_id: UUID of the quest
+
+    Returns:
+        - Quest object
     """
     quest = quest_repo.get_by_id(quest_id)
     
@@ -89,13 +99,18 @@ def create_quest(
     description: str = ""):
     """
     Create a new quest.
-    
-    - name: Quest name
-    - stat: Stat type (Strength, Agility, Intelligence, Spirit, Domain)
-    - difficulty: Difficulty level (DAILY, EASY, NORMAL, HARD, EPIC, LEGENDARY)
-    - xp_reward: XP reward amount
-    - gold_reward: Gold reward amount
-    - description: Optional quest description
+
+    Parameters:    
+        - name: Quest name
+        - stat: Stat type (Strength, Agility, Intelligence, Spirit, Domain)
+        - difficulty: Difficulty level (DAILY, EASY, NORMAL, HARD, EPIC, LEGENDARY)
+        - xp_reward: XP reward amount
+        - gold_reward: Gold reward amount
+        - description: Optional quest description
+
+    Returns:
+        - message: Success message
+        - quest: Created quest object
     """
 
     try:
@@ -135,7 +150,8 @@ def create_quest(
     }
 
 @router.put("/{quest_id}")
-def update_quest(quest_id: str,
+def update_quest(
+    quest_id: str,
     name: str = None,
     stat: str = None,
     difficulty: str = None,
@@ -146,8 +162,13 @@ def update_quest(quest_id: str,
     """
     Update an existing quest.
     
-    - **quest_id**: UUID of the quest to update
-    - All other fields are optional - only provided fields will be updated
+    Parameters:
+        - quest_id: UUID of the quest to update
+        - All other fields are optional - only provided fields will be updated
+
+    Returns:
+        - message: Success message
+        - quest: Updated quest object
     """
 
     # Check quest exists
@@ -159,6 +180,7 @@ def update_quest(quest_id: str,
     if name is not None:
         if not name.strip():
             raise HTTPException(status_code = 400, detail = "Quest name cannot be empty")
+        quest.name = name
     
     if stat is not None:
         from utils.valid_stats import VALID_STATS
@@ -231,6 +253,12 @@ def complete_quest(quest_id: str):
     
     Parameters:
         - quest_id: UUID of the quest to complete
+
+    Returns:
+        - message: Success message
+        - rewards: Details of rewards gained (XP, stat, gold)
+        - progression: Hunter progression details (level before/after, leveled up)
+        - hunter_status: Updated hunter status (total gold)
     """
 
     result = progression_service.complete_quest(quest_id)

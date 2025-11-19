@@ -1,10 +1,10 @@
 {
-  "name": "Ric",
-  "gold": 12,
+  "name": "Nadd",
+  "gold": 22,
   "stats": {
     "Strength": {
       "name": "Strength",
-      "total_xp": 12195
+      "total_xp": 12245
     },
     "Agility": {
       "name": "Agility",

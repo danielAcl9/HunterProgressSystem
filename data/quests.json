@@ -1,11 +1,29 @@
 {
   "55e39829-32ee-4a58-ac6d-da249ec0856d": {
     "id": "55e39829-32ee-4a58-ac6d-da249ec0856d",
-    "name": "Morning Run",
+    "name": "SUPER Leg Day",
     "stat": "Agility",
     "difficulty": "Easy",
-    "xp_reward": 100,
+    "xp_reward": 1500,
     "gold_reward": 20,
     "description": "Run 3km"
+  },
+  "7d1ac42a-5dbd-49c8-8ba4-2c20a71fd456": {
+    "id": "7d1ac42a-5dbd-49c8-8ba4-2c20a71fd456",
+    "name": "Code",
+    "stat": "Intelligence",
+    "difficulty": "Normal",
+    "xp_reward": 1500,
+    "gold_reward": 200,
+    "description": "Code for 1 hour"
+  },
+  "1bc2f293-2716-472d-9f72-08e9246339ee": {
+    "id": "1bc2f293-2716-472d-9f72-08e9246339ee",
+    "name": "Train",
+    "stat": "Strength",
+    "difficulty": "Daily",
+    "xp_reward": 50,
+    "gold_reward": 10,
+    "description": "Hit the Gym"
   }
 }
