@@ -202,3 +202,20 @@ def update_quest(quest_id: str,
             "description": quest.description
         }
     }
+
+@router.delete("/{quest_id}", status_code = 204)
+def delete_quest(quest_id: str):
+    """
+    Delete a quest
+    
+    Parameters:
+        - quest_id: UUID of the quest to delete
+    """ 
+
+    success = quest_service.delete_quest(quest_id)
+
+    if not success:
+        raise HTTPException(status_code = 404, detail = f"Quest wiht id {quest_id} not found")
+    
+    return None
+
