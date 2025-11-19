@@ -1,0 +1,11 @@
+{
+  "55e39829-32ee-4a58-ac6d-da249ec0856d": {
+    "id": "55e39829-32ee-4a58-ac6d-da249ec0856d",
+    "name": "Morning Run",
+    "stat": "Agility",
+    "difficulty": "Easy",
+    "xp_reward": 100,
+    "gold_reward": 20,
+    "description": "Run 3km"
+  }
+}

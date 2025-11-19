@@ -128,3 +128,77 @@ def create_quest(
             "description": created_quest.description
         }
     }
+
+@router.put("/{quest_id}")
+def update_quest(quest_id: str,
+    name: str = None,
+    stat: str = None,
+    difficulty: str = None,
+    xp_reward: int = None,
+    gold_reward: int = None,
+    description: str = None
+):
+    """
+    Update an existing quest.
+    
+    - **quest_id**: UUID of the quest to update
+    - All other fields are optional - only provided fields will be updated
+    """
+
+    # Check quest exists
+    quest = quest_repo.get_by_id(quest_id)
+    if not quest:
+        raise HTTPException(status_code = 404, detail = f"Quest with ID '{quest_id} not  found")
+    
+    # Update provided fields
+    if name is not None:
+        if not name.strip():
+            raise HTTPException(status_code = 400, detail = "Quest name cannot be empty")
+    
+    if stat is not None:
+        from utils.valid_stats import VALID_STATS
+        if stat not in VALID_STATS:
+            raise HTTPException(
+                status_code = 400,
+                detail = f"Invalid stat. Must be one of: {', '.join(VALID_STATS)}"
+            )
+        quest.stat = stat
+
+    if difficulty is not None:
+        try:
+            quest.difficulty = QuestDifficulty[difficulty.upper()]
+        except KeyError:
+            raise HTTPException(
+                status_code = 400, 
+                detail = f'Invalid difficulty. Must be one of: {[d.name for d in QuestDifficulty]}'
+            )
+        
+    if xp_reward is not None:
+        if xp_reward <= 0:
+            raise HTTPException(status_code = 400, detail = "XP reward must be greater than 0")
+        quest.xp_reward = xp_reward
+
+    if gold_reward is not None:
+        if gold_reward <= 0:
+            raise HTTPException(status_code = 400, detail = "Gold reward must be greater than 0")
+        quest.gold_reward = gold_reward
+        
+    if description is not None:
+        quest.description = description
+
+    success = quest_repo.update(quest)
+    if not success:
+        raise HTTPException(status_code = 500, detail = "Failed to update quest")
+    
+    return {
+        "message": "Quest updated successfully",
+        "quest": {
+            "id": quest.id,
+            "name": quest.name,
+            "stat": quest.stat,
+            "difficulty": quest.difficulty.name,
+            "xp_reward": quest.xp_reward,
+            "gold_reward": quest.gold_reward,
+            "description": quest.description
+        }
+    }
