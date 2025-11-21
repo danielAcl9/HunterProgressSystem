@@ -8,6 +8,8 @@ from entities.quest_difficulty import QuestDifficulty
 from services.progression_service import ProgressionService
 from repositories.hunter_repository import HunterRepository
 
+from api.schemas.quest import QuestCreate
+
 router = APIRouter(prefix="/quests", tags=["Quests"])
 
 quest_repo = QuestRepository("data/quests.json")
@@ -90,49 +92,35 @@ def get_quest(quest_id: str):
     }
 
 @router.post("/", status_code=201)
-def create_quest(
-    name: str,
-    stat: str,
-    difficuly: str,
-    xp_reward: int,
-    gold_reward: int,
-    description: str = ""):
+def create_quest(data: QuestCreate):
     """
     Create a new quest.
 
     Parameters:    
-        - name: Quest name
-        - stat: Stat type (Strength, Agility, Intelligence, Spirit, Domain)
-        - difficulty: Difficulty level (DAILY, EASY, NORMAL, HARD, EPIC, LEGENDARY)
-        - xp_reward: XP reward amount
-        - gold_reward: Gold reward amount
-        - description: Optional quest description
+        - data: QuestCreate schema with quest details
 
     Returns:
         - message: Success message
         - quest: Created quest object
     """
 
-    try:
-        difficuly_enum = QuestDifficulty[difficuly.upper()]
-    except KeyError:
-        raise HTTPException(
-            status_code=400,
-            detail = f"Invalid difficulty. Must be one of: {[d.name for d in QuestDifficulty]}"
-        )
+    from entities.quest_difficulty import QuestDifficulty
+
+    difficuly_enum = QuestDifficulty[data.difficulty.value]
     
     success, message = quest_service.create_quest(
-        name = name,
-        stat_type = stat,
+        name = data.name,
+        stat_type = data.stat,
         difficulty = difficuly_enum,
-        xp_reward = xp_reward,
-        gold_reward = gold_reward,
-        description = description
+        xp_reward = data.xp_reward,
+        gold_reward = data.gold_reward,
+        description = data.description
     )
 
     if not success:
-        raise HTTPException(status_code = 400, detail = message)
+        raise HTTPException(status_code = 400, detail = message)}
     
+    # Return created quest details
     quests = quest_service.get_all()
     created_quest = quests[-1]
 
