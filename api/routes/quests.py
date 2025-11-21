@@ -8,7 +8,7 @@ from entities.quest_difficulty import QuestDifficulty
 from services.progression_service import ProgressionService
 from repositories.hunter_repository import HunterRepository
 
-from api.schemas.quest import QuestCreate
+from api.schemas.quest import QuestCreate, QuestUpdate
 
 router = APIRouter(prefix="/quests", tags=["Quests"])
 
@@ -138,15 +138,7 @@ def create_quest(data: QuestCreate):
     }
 
 @router.put("/{quest_id}")
-def update_quest(
-    quest_id: str,
-    name: str = None,
-    stat: str = None,
-    difficulty: str = None,
-    xp_reward: int = None,
-    gold_reward: int = None,
-    description: str = None
-):
+def update_quest(quest_id: str, data: QuestUpdate):
     """
     Update an existing quest.
     
@@ -158,6 +150,7 @@ def update_quest(
         - message: Success message
         - quest: Updated quest object
     """
+    from entities.quest_difficulty import QuestDifficulty
 
     # Check quest exists
     quest = quest_repo.get_by_id(quest_id)
@@ -165,41 +158,32 @@ def update_quest(
         raise HTTPException(status_code = 404, detail = f"Quest with ID '{quest_id} not  found")
     
     # Update provided fields
-    if name is not None:
-        if not name.strip():
+    if data.name is not None:
+        if not data.name.strip():
             raise HTTPException(status_code = 400, detail = "Quest name cannot be empty")
-        quest.name = name
+        quest.name = data.name
     
-    if stat is not None:
+    if data.stat is not None:
         from utils.valid_stats import VALID_STATS
-        if stat not in VALID_STATS:
+        if data.stat not in VALID_STATS:
             raise HTTPException(
                 status_code = 400,
                 detail = f"Invalid stat. Must be one of: {', '.join(VALID_STATS)}"
             )
-        quest.stat = stat
+        quest.stat = data.stat
 
-    if difficulty is not None:
-        try:
-            quest.difficulty = QuestDifficulty[difficulty.upper()]
-        except KeyError:
-            raise HTTPException(
-                status_code = 400, 
-                detail = f'Invalid difficulty. Must be one of: {[d.name for d in QuestDifficulty]}'
-            )
+    if data.difficulty is not None:
+        quest.difficulty = QuestDifficulty[data.difficulty.value]
         
-    if xp_reward is not None:
-        if xp_reward <= 0:
-            raise HTTPException(status_code = 400, detail = "XP reward must be greater than 0")
-        quest.xp_reward = xp_reward
+    if data.xp_reward is not None:
+        quest.xp_reward = data.xp_reward
+        
 
-    if gold_reward is not None:
-        if gold_reward <= 0:
-            raise HTTPException(status_code = 400, detail = "Gold reward must be greater than 0")
-        quest.gold_reward = gold_reward
+    if data.gold_reward is not None:
+        quest.gold_reward = data.gold_reward
         
-    if description is not None:
-        quest.description = description
+    if data.description is not None:
+        quest.description = data.description
 
     success = quest_repo.update(quest)
     if not success:

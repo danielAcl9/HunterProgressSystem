@@ -32,3 +32,20 @@ class QuestCreate(BaseModel):
                 "description": "Run 5KM"
             }
         }
+
+class QuestUpdate(BaseModel):
+    """Schema for updating a quest."""
+    name: str | None = Field(None, min_length = 1, description = "Quest name (optional)")
+    stat: str | None = Field(None, description = "Stat type (optional)") 
+    difficulty: QuestDifficultyEnum | None = Field(None, description = "Quest difficulty level (optional)")
+    xp_reward: int | None = Field(None, gt = 0, description = "XP reward (optional, must be > 0)")
+    gold_reward: int | None = Field(None, gt = 0, description = "Gold reward (optional, must be > 0)")
+    description: str | None = Field(None, description = "Quest description (optinoal)")
+
+    class Config:
+        json_schema_extra = {
+            "example": {
+                "name": "SUPER Leg Day",
+                "xp_reward": 1000
+            }
+        }
