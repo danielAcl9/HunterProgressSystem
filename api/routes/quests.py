@@ -7,8 +7,10 @@ from services.quest_service import QuestService
 from entities.quest_difficulty import QuestDifficulty
 from services.progression_service import ProgressionService
 from repositories.hunter_repository import HunterRepository
+from api.schemas.quest import QuestCreate, QuestUpdate, QuestResponse, QuestList 
 
-from api.schemas.quest import QuestCreate, QuestUpdate
+from typing import List
+
 
 router = APIRouter(prefix="/quests", tags=["Quests"])
 
@@ -18,61 +20,37 @@ quest_service = QuestService(quest_repo)
 hunter_repo = HunterRepository("data/hunter.json")
 progression_service = ProgressionService(hunter_repo, quest_repo)
 
-@router.get("/")
-def list_quest(stat: Optional[str] = Query(None, description="Fitler by stat type")):
-    """
-    List all quests, optionally filtered by stat.
-    
-    Parameters
-        - stat: Optional filter by stat name (Strength, Agility, Intelligence, Spirit, Domain)
-    
-    Returns:
-        - total: Total number of quests returned
-        - stat_filter: The stat filter applied (if any)
-        - quests: List of quest objects
-    """
-
-    if stat: 
+@router.get("/", response_model=QuestList)
+def list_quests(stat: Optional[str] = Query(None, description="Filter by stat type")):
+    """List all quests, optionally filtered by stat."""
+    if stat:
         quests = quest_service.list_by_stat(stat)
-        if not quests: 
-            return {
-                "total": 0,
-                "stat_filter": stat,
-                "quests": []
-            }
-    else: 
+    else:
         quests = quest_service.get_all()
     
-    quests_data = []
-    for quest in quests:
-        quests_data.append({
-            "id": quest.id,
-            "name": quest.name,
-            "stat": quest.stat,
-            "difficulty": quest.difficulty.name,  # Enum a string
-            "xp_reward": quest.xp_reward,
-            "gold_reward": quest.gold_reward,
-            "description": quest.description
-        })
+    # Convertir a QuestResponse
+    quests_data = [
+        QuestResponse(
+            id=quest.id,
+            name=quest.name,
+            stat=quest.stat,
+            difficulty=quest.difficulty.name,
+            xp_reward=quest.xp_reward,
+            gold_reward=quest.gold_reward,
+            description=quest.description
+        )
+        for quest in quests
+    ]
     
-    return {
-        "total": len(quests_data),
-        "stat_filter": stat if stat else None,
-        "quests": quests_data
-    }
+    return QuestList(
+        total=len(quests_data),
+        stat_filter=stat,
+        quests=quests_data
+    )
 
-
-@router.get("/{quest_id}")
+@router.get("/{quest_id}", response_model=QuestResponse)
 def get_quest(quest_id: str):
-    """
-    Get a specific quest by ID.
-    
-    Parameters:
-        - quest_id: UUID of the quest
-
-    Returns:
-        - Quest object
-    """
+    """Get a specific quest by ID."""
     quest = quest_repo.get_by_id(quest_id)
     
     if not quest:
@@ -81,15 +59,15 @@ def get_quest(quest_id: str):
             detail=f"Quest with ID '{quest_id}' not found"
         )
     
-    return {
-        "id": quest.id,
-        "name": quest.name,
-        "stat": quest.stat,
-        "difficulty": quest.difficulty.name,
-        "xp_reward": quest.xp_reward,
-        "gold_reward": quest.gold_reward,
-        "description": quest.description
-    }
+    return QuestResponse(
+        id=quest.id,
+        name=quest.name,
+        stat=quest.stat,
+        difficulty=quest.difficulty.name,
+        xp_reward=quest.xp_reward,
+        gold_reward=quest.gold_reward,
+        description=quest.description
+    )
 
 @router.post("/", status_code=201)
 def create_quest(data: QuestCreate):
