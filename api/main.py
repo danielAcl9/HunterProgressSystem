@@ -1,13 +1,18 @@
-"""FastPAI application for Hunter System."""
+"""FastAPI application for Hunter System."""
 
 from fastapi import FastAPI
 from api.routes import hunter, quests
+from api.middleware import error_handler_middleware, add_exception_handlers
 
 app = FastAPI(
     title="Hunter Progression System",
     description="API for gamified habit tracking system",
     version="1.0.0"
 )
+
+app.middleware("http")(error_handler_middleware)
+
+add_exception_handlers(app)
 
 app.include_router(hunter.router)
 app.include_router(quests.router)

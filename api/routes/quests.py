@@ -4,13 +4,12 @@ from fastapi import APIRouter, HTTPException, Query
 from typing import Optional
 from repositories.quest_repository import QuestRepository
 from services.quest_service import QuestService
-from entities.quest_difficulty import QuestDifficulty
 from services.progression_service import ProgressionService
 from repositories.hunter_repository import HunterRepository
 from api.schemas.quest import QuestCreate, QuestUpdate, QuestResponse, QuestList 
 from api.schemas.completion import CompleteQuestResponse
 
-from typing import List
+from api.exceptions import QuestNotFoundException
 
 
 router = APIRouter(prefix="/quests", tags=["Quests"])
@@ -55,10 +54,7 @@ def get_quest(quest_id: str):
     quest = quest_repo.get_by_id(quest_id)
     
     if not quest:
-        raise HTTPException(
-            status_code=404,
-            detail=f"Quest with ID '{quest_id}' not found"
-        )
+        raise QuestNotFoundException(quest_id)
     
     return QuestResponse(
         id=quest.id,
