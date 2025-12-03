@@ -1,0 +1,41 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+
+# Data & Logs
+data/
+logs/
+*.log
+
+# Git
+.git/
+.gitignore
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Tests
+tests/
+test_*.py
+
+# Docker
+.dockerignore
+
+# Documentation
+README.md
+docs/
+
+# OS specific
+.DS_Store
+Thumbs.db
+
+# CI/CD
+.github/
