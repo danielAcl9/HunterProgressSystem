@@ -26,7 +26,7 @@ def setup_logging():
             # File handler para todos los logs
             logging.FileHandler("logs/app.log"),
             # File handler solo para errores
-            logging.FileHandler("logs/error.log", level=logging.ERROR)
+            logging.FileHandler("logs/error.log")
         ]
     )
 

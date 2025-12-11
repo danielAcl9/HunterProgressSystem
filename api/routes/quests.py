@@ -93,7 +93,7 @@ def create_quest(data: QuestCreate):
     )
 
     if not success:
-        raise HTTPException(status_code = 400, detail = message)}
+        raise HTTPException(status_code = 400, detail = message)
     
     # Return created quest details
     quests = quest_service.get_all()
@@ -193,48 +193,7 @@ def delete_quest(quest_id: str):
     
     return None
 
-@router.post("/{quest_id}/complete")
-def complete_quest(quest_id: str):
-    """
-    Complete a quest and apply rewards to Huner.
-    
-    Parameters:
-        - quest_id: UUID of the quest to complete
-
-    Returns:
-        - message: Success message
-        - rewards: Details of rewards gained (XP, stat, gold)
-        - progression: Hunter progression details (level before/after, leveled up)
-        - hunter_status: Updated hunter status (total gold)
-    """
-
-    result = progression_service.complete_quest(quest_id)
-
-    if not result["success"]:
-        error = result.get("error", "Unknown error")
-        if "not found" in error.lower():
-            raise HTTPException(status_code = 404, detail = error)
-        else:
-            raise HTTPException(status_code = 400, detail = error)
-        
-    return{
-        "message": f"Quest '{result['quest_name']}' completed!",
-        "rewards": {
-            "xp_gained": result["xp_gained"],
-            "stat": result["stat"],
-            "gold_gained": result["gold_gained"]
-        },
-        "progression": {
-            "level_before": result["level_before"],
-            "level_after": result["level_after"],
-            "leveled_up": result["leveled_up"]
-        },
-        "hunter_status": {
-            "total_gold": result["total_gold"]
-        }
-    }
-
-@router.post("/{quest_id}/complete", response_model=CompleteQuestResponse)  # ← AGREGAR response_model
+@router.post("/{quest_id}/complete", response_model=CompleteQuestResponse)
 def complete_quest(quest_id: str):
     """Complete a quest and apply rewards to hunter."""
     result = progression_service.complete_quest(quest_id)

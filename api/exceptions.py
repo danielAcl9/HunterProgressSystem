@@ -1,8 +1,5 @@
 """Custom exceptions for the API module."""
 
-from typing import Any, Dict
-from typing_extensions import Annotated
-from annotated_doc import Doc
 from fastapi import HTTPException, status
 
 class QuestNotFoundException(HTTPException):
