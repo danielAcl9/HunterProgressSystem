@@ -3,7 +3,7 @@ services:
     image: postgres:15-alpine
     container_name: hunter_postgres
     environment:
-      POSTGRES_USER: hunter_use
+      POSTGRES_USER: hunter_user
       POSTGRES_PASSWORD: hunter_password
       POSTGRES_DB: hunter_system
     ports:
@@ -11,7 +11,7 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U hunter_use -d hunter_system" ]
+      test: [ "CMD-SHELL", "pg_isready -U hunter_user -d hunter_system" ]
       interval: 10s
       timeout: 5s
       retries: 5
