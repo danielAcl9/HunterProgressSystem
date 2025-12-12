@@ -5,9 +5,9 @@ Hunter model - Represents the player / user in the system.
 from sqlalchemy import Column, String, Integer, Float
 from sqlalchemy.orm import relationship
 
-from database.base import Base
+from database.base import BaseModel
 
-class HunterModel(Base):
+class HunterModel(BaseModel):
     """
     Hunter entity representing a player in the system.
 
