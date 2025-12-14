@@ -2,13 +2,15 @@
 SQLAlchemy engine and session management.
 """
 from contextlib import contextmanager
+from typing import Generator
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, Session
 
 from database.config import db_config
 from database.base import Base
 
-#Create engine 
+
+# Create engine
 engine = create_engine(
     db_config.database_url,
     **db_config.get_engine_config()
@@ -16,23 +18,24 @@ engine = create_engine(
 
 # Session factory
 SessionLocal = sessionmaker(
-    autocommit = False,
-    autoflush = False,
-    bind = engine
+    autocommit=False,
+    autoflush=False,
+    bind=engine
 )
 
-def init_bd():
-    """
-    Initialize database - Create all tables.
-    ONLY for development / Testing
-    For production use Albemic migrations
-    """
 
-    Base.metadata.create_all(bind = engine)
-
-def get_db() -> Session:
+def init_db():
     """
-    Dependency that provides a database session for FastAPI routes.
+    Initialize database - create all tables.
+    Should only be used for development/testing.
+    Use Alembic migrations for production.
+    """
+    Base.metadata.create_all(bind=engine)
+
+
+def get_db() -> Generator[Session, None, None]:
+    """
+    Dependency for FastAPI to get database session.
     
     Usage:
         @app.get("/items")
@@ -45,17 +48,18 @@ def get_db() -> Session:
     finally:
         db.close()
 
+
 @contextmanager
 def get_db_session():
     """
     Context manager for database session.
-
+    
     Usage:
         with get_db_session() as db:
             db.query(Item).all()
     """
     db = SessionLocal()
-    try: 
+    try:
         yield db
         db.commit()
     except Exception:
